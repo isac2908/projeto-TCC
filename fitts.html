@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lei de Fitts — Calculadora</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Lei de Fitts</h1>
+    <nav>
+      <a href="index.html">Introdução</a>
+      <a href="hick.html">Lei de Hick-Hyman</a>
+      <a href="fitts.html" class="active">Lei de Fitts</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>Descrição</h2>
+      <p>
+        Lei de Fitts estima o tempo de movimento (MT) como:
+      </p>
+      <p class="formula"><strong>MT = a + b × log₂( D / W + 1 )</strong></p>
+      <p>
+        Onde:
+        <ul>
+          <li><strong>D</strong> = distância até o alvo (unidade à sua escolha: px, cm, mm)</li>
+          <li><strong>W</strong> = largura do alvo (mesma unidade que D)</li>
+          <li><strong>a</strong> e <strong>b</strong> são coeficientes experimentais (ms).</li>
+        </ul>
+      </p>
+    </section>
+
+    <section class="calculator">
+      <h2>Calculadora</h2>
+      <form id="fittsForm">
+        <label>
+          Distância até o alvo (D):
+          <input type="number" id="fitts_D" min="0" step="any" value="200" required>
+        </label>
+
+        <label>
+          Largura do alvo (W):
+          <input type="number" id="fitts_W" min="0.0001" step="any" value="50" required>
+        </label>
+
+        <label>
+          a (ms) — componente intercepto (padrão 0):
+          <input type="number" id="fitts_a" step="any" value="0">
+        </label>
+
+        <label>
+          b (ms por bit) — ganho (padrão 100):
+          <input type="number" id="fitts_b" step="any" value="100">
+        </label>
+
+        <div class="row">
+          <button type="submit">Calcular</button>
+          <button type="button" id="fitts_clear">Limpar</button>
+        </div>
+      </form>
+
+      <div id="fitts_result" class="result" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer>
+    <small>Observação: escolha unidades consistentes para D e W (px, mm, cm...).</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

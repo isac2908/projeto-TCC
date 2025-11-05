@@ -3,136 +3,44 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Calculadora de Designer — Tecido</title>
-  <style>
-    /* Estilo simples e responsivo */
-    :root{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
-    body{margin:0;padding:20px;background:#f7f7fb;color:#111;}
-    .container{max-width:900px;margin:0 auto;background:white;padding:20px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.06);}
-    h1{margin:0 0 10px;font-size:22px;}
-    p.lead{margin:0 0 18px;color:#444;}
-    label{display:block;margin-top:12px;font-weight:600;font-size:14px;}
-    input[type="number"], select{width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;margin-top:6px;box-sizing:border-box;}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:8px;}
-    button{margin-top:14px;padding:12px 16px;border-radius:10px;border:0;background:#1f6feb;color:white;font-weight:700;cursor:pointer;}
-    .result{margin-top:18px;padding:14px;border-radius:10px;background:#f1f8ff;border:1px solid #dbeffd;}
-    small{color:#666;}
-    footer{margin-top:18px;color:#666;font-size:13px;}
-    @media (max-width:420px){body{padding:12px}.container{padding:14px}}
-  </style>
+  <title>Calculadora IHC — Introdução</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Calculadora de Tecido para Designer</h1>
-    <p class="lead">Calcule quantos metros de tecido você precisa para uma quantidade de peças, considerando largura do tecido, margem e repetição de estampa.</p>
+  <header>
+    <h1>Calculadora IHC para Designers</h1>
+    <nav>
+      <a href="index.html" class="active">Introdução</a>
+      <a href="hick.html">Lei de Hick-Hyman</a>
+      <a href="fitts.html">Lei de Fitts</a>
+    </nav>
+  </header>
 
-    <label for="fabricWidth">Largura do tecido (cm)</label>
-    <input id="fabricWidth" type="number" min="1" value="140" />
+  <main class="container">
+    <section>
+      <h2>O que é esta calculadora?</h2>
+      <p>
+        Esta aplicação reúne duas ferramentas úteis para designers de interfaces:
+        <strong>Lei de Hick-Hyman</strong> (tempo de decisão em função do número de opções)
+        e <strong>Lei de Fitts</strong> (tempo de movimento até um alvo).
+      </p>
 
-    <label for="pieceWidth">Largura da peça (cm) — como fica na horizontal</label>
-    <input id="pieceWidth" type="number" min="1" value="50" />
+      <h3>Como usar</h3>
+      <ol>
+        <li>Navegue para a página da lei que deseja calcular.</li>
+        <li>Insira os valores pedidos (há valores padrão) e clique em <em>Calcular</em>.</li>
+        <li>Você verá o resultado e um passo a passo do cálculo para aprendizado.</li>
+      </ol>
 
-    <label for="pieceLength">Comprimento da peça (cm)</label>
-    <input id="pieceLength" type="number" min="1" value="90" />
+      <h3>Referência</h3>
+      <p>
+        Exemplo de implementação simples inspirado na sugestão do projeto de "Calculadora de Designer".
+      </p>
+    </section>
+  </main>
 
-    <div class="grid">
-      <div>
-        <label for="quantity">Quantidade de peças</label>
-        <input id="quantity" type="number" min="1" value="3" />
-      </div>
-      <div>
-        <label for="seamAllowance">Margem costura/avanco (cm)</label>
-        <input id="seamAllowance" type="number" min="0" value="2" />
-      </div>
-      <div>
-        <label for="patternRepeat">Repetição de estampa (cm) — 0 se não aplica</label>
-        <input id="patternRepeat" type="number" min="0" value="0" />
-      </div>
-      <div>
-        <label for="units">Unidades de saída</label>
-        <select id="units">
-          <option value="m">Metros (m)</option>
-          <option value="cm">Centímetros (cm)</option>
-        </select>
-      </div>
-    </div>
-
-    <button id="calcBtn">Calcular</button>
-
-    <div id="result" class="result" aria-live="polite">
-      <strong>Resultado:</strong>
-      <div id="resultText">Preencha os campos e clique em Calcular.</div>
-    </div>
-
-    <footer>
-      <small>Observação: o cálculo é uma estimativa — para peças com corte em viés, corpos grandes ou estampas com encaixe, ajuste o valor manualmente.</small>
-    </footer>
-  </div>
-
-  <script>
-    // Função que faz o cálculo explicado abaixo
-    function calcular() {
-      // Ler valores da interface
-      const fabricWidth = Number(document.getElementById('fabricWidth').value) || 0; // cm
-      const pieceWidth = Number(document.getElementById('pieceWidth').value) || 0;   // cm
-      const pieceLength = Number(document.getElementById('pieceLength').value) || 0; // cm
-      const quantity = Math.max(1, Math.floor(Number(document.getElementById('quantity').value) || 1));
-      const seam = Number(document.getElementById('seamAllowance').value) || 0;      // cm
-      const patternRepeat = Number(document.getElementById('patternRepeat').value) || 0; // cm
-      const units = document.getElementById('units').value || 'm';
-
-      // Validações básicas
-      if (fabricWidth <= 0 || pieceWidth <= 0 || pieceLength <= 0) {
-        return 'Preencha larguras e comprimento corretamente.';
-      }
-      if (pieceWidth > fabricWidth) {
-        // Se a peça for maior que a largura do tecido, cada peça exige uma "fileira" separada no comprimento
-        // o cálculo abaixo lida com isso naturalmente (1 por fileira).
-      }
-
-      // Ajustes por peça
-      const effectivePieceLength = pieceLength + seam; // comprimento por peça incluindo margem
-      // Se há repeat de estampa, cada pedaço precisa ser arredondado para cima ao múltiplo do repeat
-      const pieceLengthWithRepeat = patternRepeat > 0
-        ? Math.ceil(effectivePieceLength / patternRepeat) * patternRepeat
-        : effectivePieceLength;
-
-      // Quantas peças cabem lado a lado na largura do tecido?
-      const piecesPerRow = Math.max(1, Math.floor(fabricWidth / pieceWidth));
-
-      // Quantas "fileiras" (linhas no comprimento do tecido) precisamos para acomodar a quantidade?
-      const rowsNeeded = Math.ceil(quantity / piecesPerRow);
-
-      // Comprimento total de tecido necessário (em cm)
-      const totalLengthCm = rowsNeeded * pieceLengthWithRepeat;
-
-      // Converter para unidades solicitadas
-      const totalInMeters = totalLengthCm / 100;
-      const out = (units === 'm') ? (Math.round(totalInMeters * 100) / 100) + ' m' : Math.round(totalLengthCm) + ' cm';
-
-      // Resultado detalhado
-      const details = [
-        Largura do tecido: ${fabricWidth} cm,
-        Peças por fila (largura): ${piecesPerRow},
-        Fileiras necessárias: ${rowsNeeded},
-        Comprimento por peça (com margem e repeat): ${pieceLengthWithRepeat} cm,
-        Comprimento total: ${out}
-      ];
-
-      return details.join('<br>');
-    }
-
-    document.getElementById('calcBtn').addEventListener('click', function(){
-      const r = calcular();
-      document.getElementById('resultText').innerHTML = r;
-    });
-
-    // Ação rápida: calcular ao carregar
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('calcBtn').click();
-    });
-  </script>
+  <footer>
+    <small>Feito em HTML/CSS/JS — abra <code>hick.html</code> e <code>fitts.html</code> para testar.</small>
+  </footer>
 </body>
 </html>
-
-

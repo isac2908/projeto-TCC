@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lei de Hick-Hyman — Calculadora</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Lei de Hick-Hyman</h1>
+    <nav>
+      <a href="index.html">Introdução</a>
+      <a href="hick.html" class="active">Lei de Hick-Hyman</a>
+      <a href="fitts.html">Lei de Fitts</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>Descrição</h2>
+      <p>
+        A lei de Hick-Hyman estima o tempo de decisão (T) em função do número de alternativas (n):
+      </p>
+      <p class="formula"><strong>T = k × log₂(n + 1)</strong></p>
+      <p>
+        Onde <em>k</em> é um coeficiente experimental (ms por bit). O arquivo de referência sugere <code>k = 150</code> (ms).
+      </p>
+    </section>
+
+    <section class="calculator">
+      <h2>Calculadora</h2>
+      <form id="hickForm">
+        <label>
+          Número de opções (n):
+          <input type="number" id="hick_n" min="1" value="4" required>
+        </label>
+
+        <label>
+          k (ms por bit):
+          <input type="number" id="hick_k" min="0" step="1" value="150" required>
+        </label>
+
+        <div class="row">
+          <button type="submit">Calcular</button>
+          <button type="button" id="hick_clear">Limpar</button>
+        </div>
+      </form>
+
+      <div id="hick_result" class="result" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer>
+    <small>Dicas: teste n alto para ver como o log cresce lentamente.</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
