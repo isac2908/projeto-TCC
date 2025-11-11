@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Lei de Fitts — Calculadora</title>
+  <title>Lei de Hick-Hyman — Calculadora</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-    <h1>Lei de Fitts</h1>
+    <h1>Lei de Hick-Hyman</h1>
     <nav>
       <a href="index.html">Introdução</a>
-      <a href="hick.html">Lei de Hick-Hyman</a>
-      <a href="fitts.html" class="active">Lei de Fitts</a>
+      <a href="hick.html" class="active">Lei de Hick-Hyman</a>
+      <a href="fitts.html">Lei de Fitts</a>
     </nav>
   </header>
 
@@ -20,57 +20,47 @@
     <section>
       <h2>Descrição</h2>
       <p>
-        Lei de Fitts estima o tempo de movimento (MT) como:
+        A lei de Hick-Hyman estima o tempo de decisão (T) em função do número de alternativas (n):
       </p>
-      <p class="formula"><strong>MT = a + b × log₂( D / W + 1 )</strong></p>
+      RT = Tempo de reação ou decisão.
+      </p>
+      a = Constante, que representa o tempo de reação básico.
+      </p>
+      b = Coeficiente de ganho, indicando um aumento no tempo da decisão e da medida que o número de opções cresce.
+      </p> n = Número de opções disponíveis.
+      <p class="formula"><strong>T = k × log₂(n + 1)</strong></p>
       <p>
-        Onde:
-        <ul>
-          <li><strong>D</strong> = distância até o alvo (unidade à sua escolha: px, cm, mm)</li>
-          <li><strong>W</strong> = largura do alvo (mesma unidade que D)</li>
-          <li><strong>a</strong> e <strong>b</strong> são coeficientes experimentais (ms).</li>
-        </ul>
+        Onde <em>k</em> é um coeficiente experimental (ms por bit). O arquivo de referência sugere <code>k = 150</code> (ms).
       </p>
     </section>
 
     <section class="calculator">
       <h2>Calculadora</h2>
-      <form id="fittsForm">
+      <form id="hickForm">
         <label>
-          Distância até o alvo (D):
-          <input type="number" id="fitts_D" min="0" step="any" value="200" required>
+          Número de opções (n):
+          <input type="number" id="hick_n" min="1" value="4" required>
         </label>
 
         <label>
-          Largura do alvo (W):
-          <input type="number" id="fitts_W" min="0.0001" step="any" value="50" required>
-        </label>
-
-        <label>
-          a (ms) — componente intercepto (padrão 0):
-          <input type="number" id="fitts_a" step="any" value="0">
-        </label>
-
-        <label>
-          b (ms por bit) — ganho (padrão 100):
-          <input type="number" id="fitts_b" step="any" value="100">
+          k (ms por bit):
+          <input type="number" id="hick_k" min="0" step="1" value="150" required>
         </label>
 
         <div class="row">
           <button type="submit">Calcular</button>
-          <button type="button" id="fitts_clear">Limpar</button>
+          <button type="button" id="hick_clear">Limpar</button>
         </div>
       </form>
 
-      <div id="fitts_result" class="result" aria-live="polite"></div>
+      <div id="hick_result" class="result" aria-live="polite"></div>
     </section>
   </main>
 
   <footer>
-    <small>Observação: escolha unidades consistentes para D e W (px, mm, cm...).</small>
+    <small>Dicas: teste n alto para ver como o log cresce lentamente.</small>
   </footer>
 
   <script src="script.js"></script>
 </body>
 </html>
-
